@@ -2,28 +2,32 @@
 
 路由:爱快免费版3.6.13 x64 Build202301131532
 
-功能
+### install && how to use
+
+```bash
+pip install git+https://github.com/loyurs/ikuai_local_api.git
+```
+
 1. 获取路由lan/wan/cpu等信息
 ```python
-route = ikuai.Router(
-        username="xxx", password="xxx", ip="10.10.10.1", port=80
-    )
-    #获取wan的信息
-    d = route.get_wan_info()
-    for i in d:
-        print(i.ip_addr)
-    #获取lan的信息
-    d = route.get_lan_info()
-    for i in d:
-        print(i.ip_addr)
+from ikuai_local_api import ikuai
+router = ikuai.Router(ip="",port=80,username="xx",password="xx")
+router.get_cpu_info()
+lan = router.get_lan_info()
+#多条lan线路
+for i in lan:
+    print(i.ip_addr)
+    print(i.client_device)
 ```
+
+
+
 2. 端口映射配置
-```
+```python
+from ikuai_local_api import ikuai
+router = ikuai.Router(ip="",port=80,username="xx",password="xx")
 resp = route.dport_add(lan_addr="192.168.100.100", lan_port="3389",wan_port="3389")
 ```
-3. 配置l2tp等
 
-
-4. 从pip安装使用
-```
-pip install 
+3. 配置l2tp
+etc..

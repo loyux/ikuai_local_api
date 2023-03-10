@@ -1,12 +1,13 @@
 from setuptools import setup, find_packages
-
 setup(
     name='ikuai_local_api',
-    version='0.0.1',
+    url = 'https://github.com/loyurs/ikuai_local_api.git',
+    version='0.0.2',
     packages=find_packages(),
     install_requires=[
         'requests',
     ],
+    keywords="ikuai",
     entry_points={
         'console_scripts': [
             'ikuai_local_api=ikuai_local_api.excute:main',
