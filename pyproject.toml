@@ -1,0 +1,31 @@
+[build-system]
+requires = [ "setuptools", "setuptools-scm" ]
+build-backend = "setuptools.build_meta"
+# [tool.setuptools.dynamic]
+# version = {attr = "ikuai_local_api.VERSION"}
+
+[project]
+name = "ikuai_api"
+dynamic = ["version"]
+keywords = [ "ikuai","router"]
+authors = [
+    { name = "loyux", email = "lito0210@outlook.com" }
+]
+description = "爱快3.6.13 x64 Build202301131532"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "requests"
+]
+
+
+[tool.setuptools_scm]
+
+[project.scripts]
+ikuai_cli = "ikuai_api:cli"

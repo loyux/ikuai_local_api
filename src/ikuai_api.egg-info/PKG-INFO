@@ -1,3 +1,16 @@
+Metadata-Version: 2.1
+Name: ikuai-api
+Version: 0.1.dev2+ge6de14c.d20230926
+Summary: 爱快3.6.13 x64 Build202301131532
+Author-email: loyux <lito0210@outlook.com>
+Keywords: ikuai,router
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+
 ## Ikuai本地部分api
 
 路由:爱快免费版3.6.13 x64 Build202301131532
@@ -10,7 +23,7 @@ pip install git+https://github.com/loyurs/ikuai_local_api.git
 
 1. 获取路由lan/wan/cpu等信息
 ```python
-from ikuai_api import ikuai
+from ikuai_local_api import ikuai
 router = ikuai.Router(ip="",port=80,username="xx",password="xx")
 router.get_cpu_info()
 lan = router.get_lan_info()

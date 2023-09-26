@@ -76,18 +76,26 @@ CALL_API = "/Action/call"
 class Router:
     def __init__(
         self,
-        ip: str,
-        port: int,
-        username: str,
-        password: str,
     ) -> None:
         """初始化登录认证"""
-        self.password = password
+        self.password = None
+        self.ip = None
+        self.port = 80
+        self.username = None
+        
+    def insert_route_info(self, username, password, ip, port=80):
         self.ip = ip
         self.port = port
         self.username = username
-        self.base_url = f"http://{ip}:{port}"
+        self.password = password
+        self.base_url = f"http://{self.ip}:{self.port}"
         self.__encode_password__()
+        data = {
+            "username": self.username,
+            "passwd": self.md5_password,
+            "pass": self.__encode_pass__(),
+            "remember_password": "",
+        }
         self.session = requests.Session()
         self.session.headers.update(
             {
@@ -97,18 +105,15 @@ class Router:
                 "Accept-Language": "zh-CN",
             }
         )
-        data = {
-            "username": self.username,
-            "passwd": self.md5_password,
-            "pass": self.__encode_pass__(),
-            "remember_password": "",
-        }
         self.call_url = self.base_url + CALL_API
         # data = {"username": username, "passwd": self.password}
         login_in_status = self.session.post(
             f"{self.base_url}{LOGIN_IN}", data=json.dumps(data)
         )
-        print(login_in_status.text)
+        return login_in_status.text
+
+
+
 
     def get_lan_info(self) -> list[LanDeviceInfo]:
         """获取lan的接入信息"""
@@ -169,7 +174,7 @@ class Router:
         }
         url = self.base_url + CALL_API
         resp = self.session.post(url, data=json.dumps(payload))
-        print(resp.text)
+        return resp
 
     def __more__():
         pass
@@ -189,6 +194,7 @@ class Router:
         }
         url = self.base_url + CALL_API
         resp = self.session.post(url, data=json.dumps(payload))
+        return resp
 
     def __get_dport_show__(self):
         show_payload = {
@@ -233,13 +239,13 @@ class Router:
             },
         }
         resp = self.session.post(self.call_url, data=json.dumps(payload_add))
-        print(resp)
+        return resp
 
     def dport_delete(self, dport_id: int):
         """根据ikuai 的端口映射删除ikuai的端口映射，根据id进行删除"""
         payload = {"func_name": "dnat", "action": "del", "param": {"id": dport_id}}
         resp = self.session.post(self.call_url, json.dumps(payload))
-        print(resp.text)
+        return resp
 
     def __encode_password__(self):
         md5 = hashlib.md5()
@@ -252,7 +258,7 @@ class Router:
         encode_pass = base64.b64encode(d).decode()
         return encode_pass
 
-    def __create_l2tp__(self, ipsec_secret:str)->str:
+    def __create_l2tp__(self, ipsec_secret:str):
         """快速创建l2tp规则
             macos/ios可以使用自带vpn进行连接
         """
@@ -276,4 +282,4 @@ class Router:
             },
         }
         resp = self.session.post(self.call_url, data = json.dumps(payload))
-        return resp.text
+        return resp
