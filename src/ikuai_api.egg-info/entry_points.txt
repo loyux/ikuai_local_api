@@ -1,2 +1,0 @@
-[console_scripts]
-ikuai_cli = ikuai_api:cli

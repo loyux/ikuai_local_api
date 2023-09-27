@@ -82,7 +82,7 @@ class Router:
         self.ip = None
         self.port = 80
         self.username = None
-        
+
     def insert_route_info(self, username, password, ip, port=80):
         self.ip = ip
         self.port = port
@@ -111,9 +111,6 @@ class Router:
             f"{self.base_url}{LOGIN_IN}", data=json.dumps(data)
         )
         return login_in_status.text
-
-
-
 
     def get_lan_info(self) -> list[LanDeviceInfo]:
         """获取lan的接入信息"""
@@ -258,9 +255,9 @@ class Router:
         encode_pass = base64.b64encode(d).decode()
         return encode_pass
 
-    def __create_l2tp__(self, ipsec_secret:str):
+    def __create_l2tp__(self, ipsec_secret: str):
         """快速创建l2tp规则
-            macos/ios可以使用自带vpn进行连接
+        macos/ios可以使用自带vpn进行连接
         """
         payload = {
             "func_name": "l2tp_server",
@@ -281,5 +278,5 @@ class Router:
                 "leftid": "",
             },
         }
-        resp = self.session.post(self.call_url, data = json.dumps(payload))
+        resp = self.session.post(self.call_url, data=json.dumps(payload))
         return resp
