@@ -1,10 +1,9 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-import re
-import os
-import sys
-from ikuai_api.cli import cli
-if __name__ == '__main__':
-    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
-    sys.exit(cli())
+from ikuai_api.ikuai import Router
+# from rich.console import Console
+# console = Console()
 
+router =Router()
+r = router.insert_route_info("admin", "li19960124", "192.168.100.1")
+print(r)
+resp = router.__get_dport_show__()
+print(resp.text)
